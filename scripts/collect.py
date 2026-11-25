@@ -397,7 +397,7 @@ FOCUS_MAX_CHARS = 500
 
 
 def scrutinise_items(body):
-    """The points of the PR description's "Anything to scrutinise?" section (the team's PR template, agreement A3).
+    """The points of the PR description's "Anything to scrutinise?" section (from the team's PR template).
     Bullets become one item each; without bullets, each paragraph is one item. Template hints and empty
     placeholders are dropped."""
     lines = (body or "").replace("\r\n", "\n").splitlines()

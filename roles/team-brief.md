@@ -21,7 +21,7 @@ Inputs: the team-context file at `SOURCES_PATH` and the cache path and hash the 
 3. Write a **team brief** of **2,000–3,500 words**. Completeness matters more than brevity: every role relies on it, and
    a rule that is left out here is a rule nobody checks.
    - **Keep every concrete, checkable rule**, close to its original wording and with its identifier when the source has
-     one (for example "A8: …" from a code review agreement, or each Definition of Ready section with its required
+     one (for example a numbered rule of a code review agreement, or each Definition of Ready section with its required
      content). Do not merge several rules into one vague sentence.
    - Also keep: the system landscape and data flow, domain terms and their meaning, architectural principles,
      integration patterns, conventions, the definition of ready and done, what the team cares about in review, and

@@ -14,8 +14,8 @@ enters (HTTP, events, files, other services) to where it is used. Only report wh
   path traversal, SSRF (URLs built from input), unsafe deserialisation, XML external entities.
 - **Secrets:** Credentials, tokens or keys in code, config, tests or fixtures. Secrets logged or returned
   in responses or errors.
-- **Personal and customer data (GDPR):** PII (names, addresses, emails, phone numbers, account and meter
-  numbers, payment data) in logs, metrics, events, error messages or analytics. New storage of PII without
+- **Personal and customer data (GDPR):** PII (names, addresses, emails, phone numbers, account
+  and device numbers, payment data) in logs, metrics, events, error messages or analytics. New storage of PII without
   a clear need or a retention policy. Data exposed to more consumers than before.
 - **Input validation:** Missing bounds or format checks on money, quantities, dates and IDs; mass assignment;
   trusting client-supplied prices, amounts or roles.

@@ -12,7 +12,7 @@ callers, and work through concrete inputs in your head.
    with the new behaviour. A second implementation that was not updated is a finding.
 2. For every input the changed code relies on (a field of an event, a DTO or a context object), find where that value is
    **produced** (the subscriber, mapper or fetcher that sets it) and check that it carries what the new code assumes.
-   For example: the new code ignores removed meters, but an earlier stage derives a field from "the first meter" without
+   For example: the new code ignores removed items, but an earlier stage derives a field from "the first item" without
    checking whether it was removed.
 In `notes`, list the related files you read and what you concluded for each.
 

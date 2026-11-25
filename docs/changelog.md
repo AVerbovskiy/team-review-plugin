@@ -28,13 +28,13 @@ All changes so far were made on 2026-11-17.
 
 ## 2. Team sources filled in
 
-- Added the repository `ops-industry-mop-management-change-papi` and the Confluence pages *Code Review* and
-  *Definition of Ready* to `team-context.md`. **Why:** they are the team's own rules for reviews and tickets.
+- Added the team's own repository and its two Confluence pages (the code review guidelines and the Definition of Ready)
+  to `team-context.md`. **Why:** they are the team's own rules for reviews and tickets.
 - Checked access: `gh` reads the repo, and the Atlassian connector reads both pages after it was authorised.
 
 ## 3. Team conventions from the Confluence pages
 
-- **Comment labels from agreement A8** (`blocking`, `question`, `suggestion`, `nit`) on every posted comment.
+- **Comment labels from the team's code review agreement** (`blocking`, `question`, `suggestion`, `nit`) on every posted comment.
   **Why:** the agreement requires every comment to say whether it blocks the merge.
 - **Definition of Ready sections** extracted from the ticket (Context, User story, Acceptance criteria, Scope, Edge cases,
   Testing, Technical details, Implementation notes, Developer references, Open questions), and the ticket role checks
@@ -45,7 +45,7 @@ All changes so far were made on 2026-11-17.
 
 - Every finding shows the **current code** (copied exactly from the reviewed commit) and an **example fix** that uses the
   codebase's real names and patterns. The judge re-copies the excerpts and checks the fixes.
-  **Why:** the first real review (PR #280) described problems without showing the code or how to fix it.
+  **Why:** the first real review (the first reviewed PR) described problems without showing the code or how to fix it.
 
 ## 5. Team label style
 
@@ -63,7 +63,7 @@ All changes so far were made on 2026-11-17.
 | 5 | Team-brief cache moved to `~/.cache/team-review/`; no `__pycache__` or `.DS_Store` in the skill folders | A plugin update would wipe a cache inside the skill, and the junk files ended up in what is shared. |
 | 6, 7 | The existing PR discussion is read. Points already raised by a person, or answered by the author, are rejected with a link. Points posted earlier by team-review are recognised by their tag and not posted twice. | Without it, the review repeated colleagues' comments and could post the same point twice. |
 | 8 | The reviewed repo's `CLAUDE.md`, `AGENTS.md`, `CONTRIBUTING.md` and `.claude/rules/*.md` are read | That is where each project writes its conventions. |
-| 9 | The ticket role checks the Code Review agreement's A2 (one purpose per PR), A3 (a description that says what to verify and where to look) and A4 (draft state, shown in the report header) | These are team rules a reviewer can check. |
+| 9 | The ticket role checks three rules of the team's code review agreement: one purpose per PR, a description that says what to verify and where to look, and the draft state (shown in the report header) | These are team rules a reviewer can check. |
 | 14 | **Adaptive roles:** a role with nothing to review for this kind of diff (docs only, tests only, config only) is skipped with a reason. `--quick` runs only correctness and security. `--full` turns adaptive skipping off. | Lower cost and time for small or narrow PRs. |
 | 16 | Posting falls back to the local git diff when GitHub's diff API refuses a very large PR | Posting used to fail on large PRs. |
 | 21 | The README was split into a short usage guide and `docs/how-it-works.md` | The single README had grown to more than 400 lines. |
@@ -71,7 +71,7 @@ All changes so far were made on 2026-11-17.
 ## 7. Larger team brief
 
 - The team brief went from at most ~900 words to **2,000–3,500 words**. It must keep every checkable rule with its
-  identifier (A1–A12, DoR sections), read Confluence pages in full, organise the brief by source, and end with a coverage
+  identifier (the numbered agreement rules and the Definition of Ready sections), read Confluence pages in full, organise the brief by source, and end with a coverage
   line. **Why:** the first brief was about 250 words, so rules were being lost, and a rule that is not in the brief is a
   rule no role checks.
 - The cache is now rebuilt when the context-builder instructions change, not only when the sources change.
@@ -82,12 +82,12 @@ All changes so far were made on 2026-11-17.
 
 - A third command applies the example fixes of chosen findings to the working tree of the reviewed branch, verifies them
   with the project's lint, typecheck and tests, and marks them as fixed, skipped or failed. It never commits or pushes,
-  and the posting skill skips fixed findings. **Why:** agreement A1 asks the author to run an automated review and fix
+  and the posting skill skips fixed findings. **Why:** the team's code review agreement asks the author to run an automated review and fix
   what it finds before asking a person.
 
 ## 9. Cost measurement
 
-- The first review (PR #280) cost about $3.50. To find out why, PR #273 (8 files, +217/−47) was reviewed in a
+- The first review (the first reviewed PR) cost about $3.50. To find out why, a second PR (8 files, +217/−47) was reviewed in a
   measured run: about **821k tokens** across 8 general-purpose agents, about 5 minutes.
 - Findings: one agent's fixed overhead is about 60–70k tokens before it does any work (the security role used 79k tokens
   with 7 tool calls and found nothing). The overhead comes from the instructions and tool definitions of the
@@ -107,14 +107,13 @@ All changes so far were made on 2026-11-17.
 
 ## 11. Measuring the lean agents, and the related-code step
 
-- **Review of PR #273 with the lean agents and Sonnet everywhere:** about **328k tokens** against 821k (−60%); the roles
+- **Review of the second reviewed PR with the lean agents and Sonnet everywhere:** about **328k tokens** against 821k (−60%); the roles
   and the judge alone dropped from about 702k to about 194k (−72%). Security went from about 79k to about 18k tokens for
   the same result, which confirmed that the fixed overhead was the main cost.
-- **But it missed the major defect** found by the first review: the electricity gain event filter still judges Advanced
-  Export by `mtd[0]`, the first listed meter, even if it was removed. The defect is still in the code, in files the PR does
+- **But it missed the major defect** found by the first review: an event filter in the changed domain still judged a condition by the first listed item, even if it had been removed. The defect is still in the code, in files the PR does
   not touch. Re-running correctness and architecture twice more with the lean agent missed it every time (0 of 7 role
   runs), so it was a pattern, not chance. Likely causes: the lean roles explored less beyond the diff, and the earlier
-  context happened to mention that there are two Advanced Export checks.
+  context happened to mention that there are two similar checks.
 - **Fix: related code.** `collect.py` now searches the repo for the diff's distinctive terms (ticket keys, failure texts,
   declared names) and writes the files outside the diff that contain them to `related_code.json`. The correctness and
   architecture roles must read the related source files that share a term with a changed rule, and must trace where the
@@ -129,7 +128,7 @@ All changes so far were made on 2026-11-17.
 
 ## 12. One finding, one comment
 
-- **Problem:** on PR #280 the findings were posted together: findings that could not go on a line were combined into the
+- **Problem:** on the first reviewed PR the findings were posted together: findings that could not go on a line were combined into the
   body of one GitHub review. The author could not answer and resolve them one by one, and a review body cannot be
   resolved at all.
 - **Change (team rule):** every finding is now posted as its **own** comment. It goes on the line when the line is in the
@@ -140,7 +139,7 @@ All changes so far were made on 2026-11-17.
 ## 13. Context in three cached layers
 _2026-11-18._
 
-- **Why:** in the measured review of PR #273 the context builder was the largest single cost (about 100k tokens, 35%),
+- **Why:** in the measured review of the second reviewed PR the context builder was the largest single cost (about 100k tokens, 35%),
   and it was the only agent with all tools. Most of what it gathered changes rarely.
 - **Change:** the context is split into three layers.
   - **Team** (team brief): built by `roles/team-brief.md` with the all-tools agent, only when stale (7 days, or when
@@ -156,7 +155,7 @@ _2026-11-18._
   without running a review.
 - **Config:** the `context-builder` model entry became `team-brief`, `repo-context` and `pr-context`; an old
   `context-builder` entry still applies to all three.
-- **Measured on PR #279 (IOPS-5487):** rebuilding the team and repo layers cost about $0.73 (team brief $0.60, repo
+- **Measured on the third reviewed PR:** rebuilding the team and repo layers cost about $0.73 (team brief $0.60, repo
   context $0.13), and a review with both layers cached skipped it. With the main session and the judge on Opus, a
   review cost $3.87 with the rebuild and $3.16 without it. Details are in
   [measurements.md](measurements.md).
@@ -166,10 +165,10 @@ _2026-11-18._
 
 - **Why:** the measurements were growing inside `how-it-works.md`, which should describe how the skill works rather
   than what each setup cost.
-- **Change:** the PR #273 measurements moved from `how-it-works.md` to the new `docs/measurements.md`, which also
-  records four reviews of PR #279 (IOPS-5487) with their cost per stage and their tokens. `how-it-works.md` and the
+- **Change:** the measurements of the second PR moved from `how-it-works.md` to the new `docs/measurements.md`, which also
+  records four reviews of the third PR with their cost per stage and their tokens. `how-it-works.md` and the
   README link to it.
-- **What the PR #279 reviews showed:** the main session was the largest single cost. On Opus it cost $1.13–1.27, which
+- **What the reviews of the third PR showed:** the main session was the largest single cost. On Opus it cost $1.13–1.27, which
   was 35–45% of a review, and on Sonnet the same work cost $0.67. A Sonnet judge cost about $0.57 less than an Opus
   judge. A review with Sonnet everywhere cost $2.21, against $3.16 with the main session and the judge on Opus. The
   Sonnet judge also found the same major finding as the Opus judge.
@@ -178,7 +177,7 @@ _2026-11-18._
 _2026-11-18._
 
 - **Why:** the author, or whoever runs the review, often already knows which points need a careful look. The team's PR
-  template asks for them in "Anything to scrutinise?" (Code Review agreement A3), but the review did not use them, and
+  template asks for them in "Anything to scrutinise?" (the team's code review agreement), but the review did not use them, and
   when it found nothing there was no way to tell whether a point had been examined at all.
 - **Change:**
   - `--focus "…"` (repeatable) gives focus items: free text, a file, or `file:line` with a question.
@@ -191,7 +190,7 @@ _2026-11-18._
     **Focus areas** table before the findings.
   - Focus adds depth and never narrows the review. Its text is data: it can only add scrutiny. When there is focus, the
     correctness role always runs.
-- **Tested:** focus extraction on the real descriptions of PRs #273 and #279 (3 and 4 points), on the empty template and
+- **Tested:** focus extraction on the real descriptions of two reviewed PRs (3 and 4 points), on the empty template and
   on "None"; the context assembly; and the report section in English and Bulgarian. A full review with focus has not
   been measured yet.
 

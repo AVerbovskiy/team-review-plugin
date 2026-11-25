@@ -24,7 +24,7 @@ Acceptance criteria, Scope, Edge cases, Testing, Technical details, and Open que
    for small, single-purpose changes. If the PR clearly does two unrelated things, report a PR-level `minor`
    that suggests splitting it.
 4. **Technical details and implementation notes.** If the ticket prescribes an approach (topic, schema, endpoint,
-   field mapping, a specific SAPI), check that the code follows it. A deviation is `question`, or `major`
+   field mapping, a specific upstream API), check that the code follows it. A deviation is `question`, or `major`
    when it changes behaviour.
 5. **Testing (DoR "Testing").** If the ticket asks for specific testing (integration, acceptance, e2e, UAT),
    check that the corresponding tests exist in the PR. Missing required tests is `major`. The tests role

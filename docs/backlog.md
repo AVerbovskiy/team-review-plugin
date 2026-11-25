@@ -17,8 +17,8 @@ noticing. A rule that is not in the brief is a rule no role checks.
 `team-context.md`, written as short, checkable statements with their source, for example:
 
 ```markdown
-- A8 (Code Review): every comment states whether it blocks the merge: **blocking**, **question**, **suggestion**, **nit**.
-- A3 (Code Review): the PR description states the intent, how to verify, and what to scrutinise.
+- Code review agreement: every comment states whether it blocks the merge: **blocking**, **question**, **suggestion**, **nit**.
+- Code review agreement: the PR description states the intent, how to verify, and what to scrutinise.
 - DoR (Story): the ticket lists Scope (included / excluded), Edge cases and Testing.
 - Every Kafka consumer is idempotent on the event ID. (team convention, not yet written down)
 ```
@@ -37,7 +37,7 @@ stay as the source of background and reasoning.
 ### Measure the cached context
 _Added 2026-11-18._
 
-The three-layer context is implemented but not yet measured. Review PR #273 twice: once with both caches rebuilt, and
+The three-layer context is implemented but not yet measured. Review the same PR twice: once with both caches rebuilt, and
 once with both fresh. Compare with the last measurement (about 284k tokens, of which about 100k for the context builder).
 
 ### Per-user model overrides
@@ -57,7 +57,7 @@ Sonnet and an Opus judge on the same saved findings before deciding the default.
 ### Related code: tune the search
 _Added 2026-11-17._
 
-`related_code.json` is a plain text search, so it lists irrelevant files too (25 on PR #273). Watch whether that noise
+`related_code.json` is a plain text search, so it lists irrelevant files too (25 on one PR). Watch whether that noise
 costs tokens or attention, and tune it if needed: rank terms from the lines that change a rule (conditions, failure
 reasons) above plain names, or cap the list lower.
 
@@ -77,11 +77,11 @@ _Added 2026-11-17._
 ## Done
 
 - 2026-11-18: Context in three cached layers (team, repo, PR) and the `/team-review:context` command.
-- 2026-11-17: Lean agents measured on PR #273: −60% tokens, but they missed a defect outside the diff. Fixed with the
+- 2026-11-17: Lean agents measured on one PR: −60% tokens, but they missed a defect outside the diff. Fixed with the
   related-code step and a required tracing step; the defect is now found in 4 of 4 runs.
 - 2026-11-17: Model per agent is set in `config.json`; every agent defaults to Sonnet, including the judge.
 - 2026-11-17: Lean agents `team-review:worker` (roles and judge) and `team-review:context` (context builder).
 - 2026-11-17: `architecture` and `adr` merged into one `architecture` role.
 - 2026-11-17: Team brief limit raised from ~900 to 2,000–3,500 words, keeping every checkable rule with its identifier.
   The brief now rebuilds when its instructions change, not only when the sources change.
-- 2026-11-17: `/team-review:fix` for the author's self-review (Code Review agreement A1).
+- 2026-11-17: `/team-review:fix` for the author's self-review (the team's code review agreement).
