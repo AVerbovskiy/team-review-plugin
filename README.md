@@ -28,11 +28,11 @@ builder your Confluence pages.
 In Claude Code:
 
 ```text
-/plugin marketplace add <owner>/team-review-plugin
+/plugin marketplace add AVerbovskiy/team-review-plugin
 /plugin install team-review@team-review-marketplace
 ```
 
-Then start a new session. For a private repository, `gh auth login` (or a `GITHUB_TOKEN`) must be set up first.
+Then start a new session. The repository is public, so installing it needs no GitHub access. The review itself needs `gh` to be authenticated.
 Update later with `/plugin marketplace update team-review-marketplace`.
 
 To make Claude Code offer the plugin to everyone who opens a repository, add this to the repository's
@@ -41,7 +41,7 @@ To make Claude Code offer the plugin to everyone who opens a repository, add thi
 ```json
 {
   "extraKnownMarketplaces": {
-    "team-review-marketplace": { "source": { "source": "github", "repo": "<owner>/team-review-plugin" } }
+    "team-review-marketplace": { "source": { "source": "github", "repo": "AVerbovskiy/team-review-plugin" } }
   },
   "enabledPlugins": { "team-review@team-review-marketplace": true }
 }
