@@ -1,0 +1,13 @@
+{
+  "_doc": "Model per agent. 'default' applies to every agent without its own entry. Allowed: sonnet, opus, haiku, fable. See README, section Configuration.",
+  "models": {
+    "default": "sonnet",
+    "context-builder": "sonnet",
+    "ticket": "sonnet",
+    "architecture": "sonnet",
+    "security": "sonnet",
+    "correctness": "sonnet",
+    "tests": "sonnet",
+    "judge": "sonnet"
+  }
+}

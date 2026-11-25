@@ -1,0 +1,7 @@
+{
+  "name": "team-review",
+  "version": "0.1.0",
+  "description": "Local team code review of a branch or PR with independent reviewer roles (ticket, architecture and ADRs, security, correctness, tests) and a judge. Findings can be posted to the PR or fixed locally.",
+  "author": { "name": "AVerbovskiy" },
+  "keywords": ["code-review", "pull-request", "review"]
+}

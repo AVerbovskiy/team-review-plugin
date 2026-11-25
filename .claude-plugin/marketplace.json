@@ -1,0 +1,11 @@
+{
+  "name": "team-review-marketplace",
+  "owner": { "name": "AVerbovskiy" },
+  "plugins": [
+    {
+      "name": "team-review",
+      "source": "./",
+      "description": "Local team code review of a branch or PR with independent reviewer roles and a judge; post findings to the PR or fix them locally."
+    }
+  ]
+}
